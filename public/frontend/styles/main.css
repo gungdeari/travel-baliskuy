@@ -13,7 +13,7 @@ body {
 }
 .navbar-light .navbar-nav .nav-item .nav-link.active {
   font-weight: semibold;
-  color: cadetblue;
+  color: #023047;
 }
 
 .btn-navbar-right {

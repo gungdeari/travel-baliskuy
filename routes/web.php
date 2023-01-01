@@ -44,6 +44,8 @@ Route::prefix('admin')
 
 
         Route::resource('travel-package', TravelPackageController::class);
+
+        Route::resource('gallery', GalleryController::class);
     });
 
 Auth::routes(['verify' => true]);
