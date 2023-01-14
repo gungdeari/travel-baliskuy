@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\TravelPackageController;
+use App\Http\Controllers\admin\GalleryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DetailController;
 use App\Http\Controllers\CheckoutController;
@@ -44,7 +45,6 @@ Route::prefix('admin')
 
 
         Route::resource('travel-package', TravelPackageController::class);
-
         Route::resource('gallery', GalleryController::class);
     });
 

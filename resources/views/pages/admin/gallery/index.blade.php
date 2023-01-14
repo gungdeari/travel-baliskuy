@@ -6,7 +6,7 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <div class="d-sm-flex align-item-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Gallery</h1>
             <a href="{{ route('gallery.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                 <i class="fas fa-plus fa-sm text-white-50"></i> Add Gallery
@@ -25,8 +25,8 @@
                                 <th> Action </th>
                             </tr>
                         </thead>
-                        <tbody>
-                                
+
+                        <tbody>    
                             @forelse($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
@@ -49,7 +49,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="/" class="text-center">
+                                    <td colspan="7" class="text-center">
                                         Data Kosong
                                     </td>
                                 </tr>
@@ -60,10 +60,6 @@
                 </div>
             </div>
         </div>
-
-
-        
-
     </div>
     <!-- /.container-fluid -->
 @stop
