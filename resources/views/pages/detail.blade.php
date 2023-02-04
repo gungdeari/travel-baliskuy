@@ -22,56 +22,41 @@
             <div class="row">
             <div class="col-lg-8 pl-lg-0">
                 <div class="card card-details ml-3">
-                <h1>Ubud, Bali</h1>
+                <h1>{{ $item->title }}</h1>
                 <p>
-                    Republic of Indonesia Raya
+                    {{ $item->location }}
                 </p>
-                <div class="gallery">
-                    <div class="xzoom-container">
-                    <img src="{{ url('frontend/images/details.jpg') }}" class="xzoom" id="xzoom-default"
-                        xoriginal="frontend/images/details.jpg">
+                @if($item->galleries->count())
+                    <div class="gallery">
+                        <div class="xzoom-container">
+                        <img 
+                            src="{{ Storage::url($item->galleries->first()->image) }}" class="xzoom" 
+                            id="xzoom-default"
+                            xoriginal="{{ Storage::url($item->galleries->first()->image) }}">
+                        </div>
+                        <div class="xzoom-thumbs">
+                        
+                        @foreach ($item->galleries as $gallery)
+                            <a href="{{ Storage::url($gallery->image) }}">
+                                <img src="{{ Storage::url($gallery->image) }}" class="xzoom-gallery" width="128"
+                                xpreview="{{ Storage::url($gallery->image) }}">
+                            </a>
+                        @endforeach
+                        
+                        </div>
                     </div>
-                    <div class="xzoom-thumbs">
-                    <a href="{{ url('frontend/images/thumbs1.jpg') }}">
-                        <img src="{{ url('frontend/images/thumbs1.jpg') }}" class="xzoom-gallery" width="124.5"
-                        xpreview="{{ url('frontend/images/thumbs1.jpg') }}">
-                    </a>
-                    <a href="{{ url('frontend/images/thumbs2.jpg') }}">
-                        <img src="{{ url('frontend/images/thumbs2.jpg') }}" class="xzoom-gallery" width="124.5"
-                        xpreview="{{ url('frontend/images/thumbs2.jpg') }}">
-                    </a>
-                    <a href="{{ url('frontend/images/thumbs3.jpg') }}">
-                        <img src="{{ url('frontend/images/thumbs3.jpg') }}" class="xzoom-gallery" width="124.5"
-                        xpreview="{{ url('frontend/images/thumbs3.jpg') }}">
-                    </a>
-                    <a href="{{ url('frontend/images/thumbs4.jpg') }}">
-                        <img src="{{ url('frontend/images/thumbs4.jpg') }}" class="xzoom-gallery" width="124.5"
-                        xpreview="{{ url('frontend/images/thumbs4.jpg') }}">
-                    </a>
-                    <a href="{{ url('frontend/images/thumbs5.jpg') }}">
-                        <img src="{{ url('frontend/images/thumbs5.jpg') }}" class="xzoom-gallery" width="124.5"
-                        xpreview="{{ url('frontend/images/thumbs5.jpg') }}">
-                    </a>
-                    </div>
-                </div>
+                @endif
+                
                 <h2>About Destination</h2>
                 <p>
-                    Ubud is a town on the Indonesian island of Bali in Ubud District, located amongst rice paddies and steep
-                    ravines in the central foothills of the Gianyar regency. Promoted as an arts and culture centre, it has
-                    developed a large tourism industry. It forms a northern part of the Greater Denpasar metropolitan area
-                </p>
-                <p>
-                    Puri Saren Agung is a large palace located at the intersection of Monkey Forest and Raya Ubud roads. The
-                    residence of Tjokorda Gede Agung Sukawati (1910–1978), the last ruling monarch of Ubud, it is still
-                    owned by the royal family. Dance performances and ceremonies are held in its courtyard. The palace was
-                    also one of Ubud first hotels, opening its doors back in the 1930s.
+                   { !! $item->about !! }
                 </p>
                 <div class="features row">
                     <div class="col-md-4">
                     <img src="{{ url('frontend/images/features1.png') }}" alt="" class="features-image">
                     <div class="description">
                         <h3>Featured Event</h3>
-                        <p>Balinese Dance</p>
+                        <p>{{ $item->featured_event }}</p>
                     </div>
                     </div>
                     <div class="col-md-4 border-left">
@@ -79,7 +64,7 @@
                         <img src="{{ url('frontend/images/features2.png') }}" alt="" class="features-image">
                         <div class="description">
                         <h3>Language</h3>
-                        <p>Indonesian</p>
+                        <p>{{ $item->language }}</p>
                         </div>
                     </div>
                     </div>
@@ -88,7 +73,7 @@
                         <img src="{{ url('frontend/images/features3.png') }}" alt="" class="features-image">
                         <div class="description">
                         <h3>Foods</h3>
-                        <p>Ayam Betutu</p>
+                        <p>{{ $item->foods }}</p>
                         </div>
                     </div>
                     </div>
@@ -122,33 +107,42 @@
                     <tr>
                     <th width="50%">Date of Departure</th>
                     <td width="50%" class="text-right">
-                        22 Dec, 2022
+                        {{ \Carbon\Carbon::create($item->date_of_departure)->format('F n, Y') }}
                     </td>
                     </tr>
                     <tr>
                     <th width="50%">Duration</th>
                     <td width="50%" class="text-right">
-                        5D 4N
+                        {{ $item->duration }}
                     </td>
                     </tr>
                     <tr>
                     <th width="50%">Type</th>
                     <td width="50%" class="text-right">
-                        Open Trip
+                        {{ $item->type }}
                     </td>
                     </tr>
                     <tr>
                     <th width="50%">Price</th>
                     <td width="50%" class="text-right">
-                        $50,00 / person
+                        ${{ $item->price }},00 / person
                     </td>
                     </tr>
                 </table>
                 </div>
                 <div class="join-container">
-                <a href="{{ route('checkout') }}" class="btn btn-block btn-join-now mt-3 my-2">
-                    Join Now
-                </a>
+                    @auth
+                        <form action="" method="post">
+                            <button class="btn btn-block btn-join-now mt-3 py-2" type="submit">
+                                Join Now
+                            </button>
+                        </form>
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}" class="btn btn-block btn-join-now mt-3 my-2">
+                            JLogin or Register to Join
+                        </a>
+                    @endguest
                 </div>
             </div>
             </div>

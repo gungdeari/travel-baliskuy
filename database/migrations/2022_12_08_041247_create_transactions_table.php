@@ -17,9 +17,9 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('travel_packages_id');
             $table->integer('user_id');
-            $table->integer('additional_visa');
+            $table->string('additional_visa');
             $table->integer('transaction_total');
-            $table->integer('transaction_status'); // IN_CART, PENDING, SUCCESS, CANCEL, FAILED
+            $table->string('transaction_status'); // IN_CART, PENDING, SUCCESS, CANCEL, FAILED
             $table->softDeletes();
             $table->timestamps();
         });
