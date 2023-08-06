@@ -20,7 +20,7 @@ class TransactionsFactory extends Factory
         return [
             'id' => $this->faker->id,
             'travel_packages_id' => $this->faker->travel_packages_id,
-            'user_id' => $this->faker->user_id,
+            'users_id' => $this->faker->users_id,
             'additional_visa' => $this->faker->additional_visa,
             'transaction_total' => $this->faker->transaction_total,
             'transaction_status' => $this->faker->transaction_status,

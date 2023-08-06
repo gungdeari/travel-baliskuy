@@ -74,7 +74,7 @@
                   <div class="travel-destination">{{ $item->title }}</div>
                   <div>
                     <div class="travel-button mt-10">
-                      <a href="{{ route('detail', ['slug'=>$item->slug]) }}" class="btn btn-travel-details px-4">
+                      <a href="{{ route('detail', $item->slug) }}" class="btn btn-travel-details px-4">
                         View Details
                       </a>
                     </div>

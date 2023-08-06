@@ -23,7 +23,7 @@ use App\Http\Controllers\CheckoutController;
 Route::get('/', [HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/detail', [DetailController::class, 'index'])
+Route::get('/detail/{slug}', [DetailController::class, 'index'])
     ->name('detail');
 
 Route::post('/checkout/{id}', [CheckoutController::class, 'process'])

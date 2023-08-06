@@ -24,9 +24,20 @@
         <div class="row">
           <div class="col-lg-8 pl-lg-0">
             <div class="card card-details ml-3">
+
+            @if ($errors->any())
+              <div class="alert alert-danger">
+                <ul>
+                  @foreach ($errors as $error)
+                    <li>{{ $error }}<?li>
+                  @endforeach
+                </ul>
+              </div>
+            @endif
+
               <h1>Who is Going</h1>
               <p>
-                Trip to Ubud, Bali, Indonesia
+                {{ $items->travel_packages->title }}, at {{$items->travel_packages->location }}
               </p>
               <div class="attendee">
                 <table class="table table-responsive-sm text-center">
@@ -41,50 +52,38 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <img src="{{ url('frontend/images/avatar1-fix.png') }}"
-                      </td>
-                      <td class="align-middle">
-                        Angie Marcheria
-                      </td>
-                      <td class="align-middle">
-                        ID
-                      </td>
-                      <td class="align-middle">
-                        N/A
-                      </td>
-                      <td class="align-middle">
-                        Active
-                      </td>
-                      <td class="align-middle">
-                        <a href="">
-                          <img src="{{ url('frontend/images/TandaX-fix.png') }}" 
-                        </a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <img src="{{ url('frontend/images/avatar2-fix.png') }}"
-                      </td>
-                      <td class="align-middle">
-                        Mutia Maharani
-                      </td>
-                      <td class="align-middle">
-                        SG
-                      </td>
-                      <td class="align-middle">
-                        30 Days
-                      </td>
-                      <td class="align-middle">
-                        Active
-                      </td>
-                      <td class="align-middle">
-                        <a href="">
-                          <img src="{{ url('frontend/images/TandaX-fix.png') }}"
-                        </a>
-                      </td>
-                    </tr>
+      
+                    @forelse ($items->details as $detail)
+                      <tr>
+                        <td>
+                          <img src="https://ui-avatars.com/api/?name{{ $detail->username }}" class="rounded-circle" />
+                        </td>
+                        <td class="align-middle">
+                          {{ $detail->username }}
+                        </td>
+                        <td class="align-middle">
+                          {{ $detail->nationality }}
+                        </td>
+                        <td class="align-middle">
+                          {{ $detail->is_visa ? '30 Days' : 'N/A'}}
+                        </td>
+                        <td class="align-middle">
+                          {{ \Carbon\Carbon::createFromDate($detail->doe_passport) > \Carbon\Carbon::now() ? 'Active' : 'Inactive'}}
+                        </td>
+                        <td class="align-middle">
+                          <a href="{{ route('checkout-remove', $detail->id) }}">
+                            <img src="{{ url('frontend/images/TandaX-fix.png') }}" 
+                          </a>
+                        </td>
+                      </tr>
+                    @empty
+                      <tr>
+                        <td colspan="6" class="text-center">
+                          No Visitor
+                        </td>
+                      </tr>
+                    @endforelse
+                  
                   </tbody>
                 </table>
               </div>
@@ -138,31 +137,32 @@
                   <tr>
                     <th width="50%">Members</th>
                     <td width="50%" class="text-right">
-                      2 person
+                      {{$items->details->count()}} person
                     </td>
                   </tr>
                   <tr>
                     <th width="50%">Additional VISA</th>
                     <td width="50%" class="text-right">
-                      $190.00
+                      {{$items->additional_visa}}
                     </td>
                   </tr>
                   <tr>
                     <th width="50%">Trip Price</th>
                     <td width="50%" class="text-right">
-                      $80.00/person
+                      ${{ $items->travel_packages->price }}/person
                     </td>
                   </tr>
                   <tr>
                     <th width="50%">Sub Total</th>
                     <td width="50%" class="text-right">
-                      $280.00
+                      ${{ $items->transaction_total }}
                     </td>
                   </tr>
                   <tr>
                     <th width="50%">Total (+Unique)</th>
                     <td width="50%" class="text-right text-total">
-                      <span class="text-blue">$279.</span><span class="text-red">33</span>
+                      <span class="text-blue">${{ $items->transaction_total }},
+                      </span><span class="text-red">{{ mt_rand(0,99) }}</span>
                     </td>
                   </tr>
                 </table>
@@ -200,12 +200,12 @@
               </div>
             </div>
             <div class="join-container">
-              <a href="{{ route('checkout-success') }}" class="btn btn-block btn-join-now mt-2 my-2">
+              <a href="{{ route('checkout-success',$items->id)}}" class="btn btn-block btn-join-now mt-2 my-2">
                 I Have Made Payment
               </a>
             </div>
             <div class="text-center mt-3">
-              <a href="{{ route('detail') }}" class="text-muted">
+              <a href="{{ route('detail', $items->travel_packages->slug) }}" class="text-muted">
               Cancel Booking
             </div>
           </div>

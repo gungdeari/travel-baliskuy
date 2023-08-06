@@ -46,6 +46,7 @@
                     <tr>
                         <th>Purchase</th>
                         <td>
+
                             <table class="table table-bordered">
                                 <tr>
                                     <th>ID</th>

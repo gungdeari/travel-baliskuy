@@ -16,11 +16,11 @@ class TransactionsSeeder extends Seeder
     public function run()
     {
         DB::table('transactions')->insert([
-            'id' => 1,
-            'travel_packages_id' => 1,
-            'user_id' => 10,
+            'id' => 2,
+            'travel_packages_id' => 2,
+            'users_id' => 2,
             'additional_visa' => 'N/A',
-            'transaction_total' => 150000,
+            'transaction_total' => 250000,
             'transaction_status' => 'PENDING',
             'deleted_at' => null,
             'created_at' => null,
